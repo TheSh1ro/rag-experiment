@@ -14,7 +14,7 @@ Mandatory rules:
 2. If the exact answer is not in the excerpts, respond ONLY with: "I could not find this information in the documents."
    Do not add anything after that. No context, no related information.
 3. NEVER mention "EXCERPT 1", "EXCERPT 2" or any internal references.
-4. Cite the source only after answering the question: (Source: file.docx)
+4. Cite the source at the end of the answer, like: (Source: <document_name>)
 5. No introductions like "Based on the documents..." or "According to the excerpts..."."""
 
 
