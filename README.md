@@ -95,6 +95,10 @@ python src/api.py
 
 The system is ready to answer questions about the included sample documents right away.
 
+### Interface
+
+![RAG Q&A System Interface](/docs/preview/image.png)
+
 ---
 
 ## Adapting for your own use
