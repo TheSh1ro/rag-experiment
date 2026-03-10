@@ -1,0 +1,81 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+.env.*
+!.env.example
+.venv/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+pytest_cache/
+
+# Type checkers
+.mypy_cache/
+.pyre/
+.pytype/
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+
+# FastAPI / server
+*.sqlite3
+*.db
+
+# Docker
+docker-compose.override.yml
+
+# ChromaDB / embeddings storage
+chroma/
+chromadb/
+banco/
+
+# Documentos internos — não versionar
+documentos/
+
+# Temporary files
+tmp/
+temp/
+
+# Python packaging
+*.whl
+*.tar.gz
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Coverage
+coverage.xml
+
+# Local configs
+local_settings.py
