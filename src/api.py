@@ -1,7 +1,4 @@
 from pathlib import Path
-import sys, os
-
-sys.path.insert(0, os.path.dirname(__file__))
 
 import uvicorn
 from fastapi import FastAPI
@@ -95,8 +92,10 @@ def ask(body: QuestionRequest):
 
 @app.get("/", response_class=HTMLResponse)
 def ui():
-    return (Path(__file__).parent / "index.html").read_text(encoding="utf-8")
+    return (Path(__file__).parent.parent / "renderer" / "index.html").read_text(encoding="utf-8")
 
 
 if __name__ == "__main__":
-    uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
+    print("Server running at http://localhost:8000")
+    print("API docs at   http://localhost:8000/docs")
+    uvicorn.run("api:app", host="localhost", port=8000, reload=True)
