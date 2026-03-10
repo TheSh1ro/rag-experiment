@@ -3,12 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Orion Dental Group — Central de Atendimento</title>
+    <title>Orion Dental - Central de Atendimento</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200;300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap"
       rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f9b7.png"
     />
     <style>
       *,
@@ -530,7 +534,7 @@
       /* ── Footer ──────────────────────────────────────────── */
       footer {
         border-top: 1px solid var(--navy-line);
-        padding: 1.5rem 3rem;
+        padding: 0.5rem 3rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -545,6 +549,71 @@
       }
       .footer-brand span {
         color: var(--gold);
+      }
+      .footer-github-card {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        background: var(--navy-card);
+        border: 1px solid rgba(200, 169, 110, 0.3);
+        border-radius: 8px;
+        padding-inline: 1rem 2rem;
+        padding-block: 0.5rem;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s,
+          transform 0.2s;
+      }
+      .footer-github-card:hover {
+        border-color: var(--gold);
+        box-shadow: 0 0 18px rgba(200, 169, 110, 0.15);
+        transform: translateY(-2px);
+      }
+      .footer-github-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(200, 169, 110, 0.5);
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+      .footer-github-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+      }
+      .footer-github-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+      }
+      .footer-github-badge svg {
+        width: 11px;
+        height: 11px;
+        fill: var(--muted);
+        flex-shrink: 0;
+      }
+      .footer-github-name {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--gold-light);
+        letter-spacing: 0.04em;
+      }
+      .footer-github-card:hover .footer-github-name {
+        color: var(--gold);
+      }
+      .footer-github-sub {
+        font-size: 0.65rem;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+        font-family: "IBM Plex Sans", sans-serif;
       }
       .footer-info {
         font-size: 0.72rem;
@@ -907,7 +976,7 @@
               >Política de cancelamento</span
             >
             <span class="chip" onclick="fillChip(this)"
-              >Implante dentário — quanto tempo?</span
+              >Implante dentário quanto tempo?</span
             >
             <span class="chip" onclick="fillChip(this)"
               >Clareamento dental</span
@@ -938,12 +1007,32 @@
       <!-- Footer -->
       <footer>
         <div class="footer-brand">
-          &copy; 2025 <span>Orion Dental Group</span> — Fundado em 2014
+          &copy; 2025 <span>Orion Dental Group</span> • Fundado em 2014
         </div>
-        <div class="footer-info">
-          São Paulo · Brasil &nbsp;|&nbsp; 18 Unidades no Sudeste<br />
-          Este canal é exclusivo para dúvidas informativas.
-        </div>
+        <a
+          class="footer-github-card"
+          href="https://github.com/TheSh1ro"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            class="footer-github-avatar"
+            src="https://github.com/TheSh1ro.png"
+            alt="TheSh1ro"
+          />
+          <div class="footer-github-info">
+            <div class="footer-github-badge">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+                />
+              </svg>
+              GitHub
+            </div>
+            <span class="footer-github-name">TheSh1ro</span>
+            <span class="footer-github-sub">Ver perfil →</span>
+          </div>
+        </a>
       </footer>
     </div>
 
