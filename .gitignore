@@ -58,7 +58,7 @@ docker-compose.override.yml
 # ChromaDB / embeddings storage
 chroma/
 chromadb/
-banco/
+database/
 
 # Documentos internos — não versionar
 documents/
