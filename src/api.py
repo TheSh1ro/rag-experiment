@@ -28,9 +28,17 @@ class CostResponse(BaseModel):
     total_cost_eur: float
 
 
+class SourceChunk(BaseModel):
+    file: str
+    excerpt: str
+    score: float
+    confidence: str
+
+
 class AnswerResponse(BaseModel):
     answer: str
     sources: list[str]
+    chunks: list[SourceChunk]
     confidence: str
     average_score: float
     cost: CostResponse
@@ -53,6 +61,7 @@ def ask(body: QuestionRequest):
         return AnswerResponse(
             answer="Please ask a complete question.",
             sources=[],
+            chunks=[],
             confidence="insufficient",
             average_score=0.0,
             cost=CostResponse(tokens_input=0, tokens_output=0, total_cost_eur=0.0),
@@ -64,6 +73,7 @@ def ask(body: QuestionRequest):
         return AnswerResponse(
             answer=f"Internal error while processing the question: {exc}",
             sources=[],
+            chunks=[],
             confidence="insufficient",
             average_score=0.0,
             cost=CostResponse(tokens_input=0, tokens_output=0, total_cost_eur=0.0),
@@ -72,6 +82,7 @@ def ask(body: QuestionRequest):
     return AnswerResponse(
         answer=result["answer"],
         sources=result["sources"],
+        chunks=[SourceChunk(**c) for c in result["chunks"]],
         confidence=result["confidence"],
         average_score=result["average_score"],
         cost=CostResponse(**{

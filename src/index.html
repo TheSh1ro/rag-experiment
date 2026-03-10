@@ -589,6 +589,194 @@
         }
       }
 
+      /* ── Source Modal ────────────────────────────────────── */
+      .badge-source {
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .badge-source:hover {
+        background: rgba(200, 169, 110, 0.22);
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: rgba(7, 16, 31, 0.82);
+        backdrop-filter: blur(6px);
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        animation: fadeIn 0.18s ease both;
+      }
+      .modal-overlay.open {
+        display: flex;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .modal {
+        background: var(--navy-card);
+        border: 1px solid rgba(200, 169, 110, 0.28);
+        border-radius: 8px;
+        width: 100%;
+        max-width: 640px;
+        height: 72vh;
+        max-height: 560px;
+        min-height: 320px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+        animation: modalUp 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      @keyframes modalUp {
+        from {
+          transform: translateY(24px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .modal-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--navy-line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-shrink: 0;
+      }
+      .modal-title {
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+      .modal-filename {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .modal-meta {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .modal-close {
+        background: none;
+        border: none;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 1.2rem;
+        line-height: 1;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        transition:
+          color 0.15s,
+          background 0.15s;
+      }
+      .modal-close:hover {
+        color: var(--white);
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      .modal-body {
+        padding: 1.5rem;
+        overflow-y: auto;
+        flex: 1;
+      }
+      .modal-excerpt {
+        font-family: "IBM Plex Sans", sans-serif;
+        font-size: 0.88rem;
+        font-weight: 300;
+        line-height: 1.85;
+        color: var(--white);
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .modal-excerpt mark {
+        background: rgba(200, 169, 110, 0.2);
+        color: var(--gold-light);
+        border-radius: 2px;
+        padding: 0 2px;
+      }
+
+      .modal-footer {
+        padding: 0.75rem 1.5rem;
+        border-top: 1px solid var(--navy-line);
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        flex-shrink: 0;
+      }
+
+      /* chunk navigation dots */
+      .chunk-nav {
+        display: flex;
+        gap: 0.45rem;
+        align-items: center;
+        flex: 1;
+      }
+      .chunk-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: 1px solid rgba(200, 169, 110, 0.4);
+        background: transparent;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
+        padding: 0;
+        flex-shrink: 0;
+      }
+      .chunk-dot.active {
+        background: var(--gold);
+        border-color: var(--gold);
+      }
+      .modal-nav-btn {
+        background: none;
+        border: 1px solid var(--navy-line);
+        color: var(--muted);
+        font-size: 0.78rem;
+        padding: 0.3rem 0.8rem;
+        border-radius: 3px;
+        cursor: pointer;
+        font-family: "IBM Plex Sans", sans-serif;
+        transition:
+          border-color 0.15s,
+          color 0.15s;
+      }
+      .modal-nav-btn:hover:not(:disabled) {
+        border-color: var(--gold);
+        color: var(--gold-light);
+      }
+      .modal-nav-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
       /* ── Responsive ──────────────────────────────────────── */
       @media (max-width: 600px) {
         header {
@@ -759,6 +947,49 @@
       </footer>
     </div>
 
+    <!-- Source Modal -->
+    <div
+      class="modal-overlay"
+      id="sourceModal"
+      onclick="closeModalOnOverlay(event)"
+    >
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <div class="modal-header">
+          <span class="modal-title" id="modalTitle">Ver na Fonte</span>
+          <span class="modal-filename" id="modalFilename"></span>
+          <div class="modal-meta" id="modalMeta"></div>
+          <button class="modal-close" onclick="closeModal()" title="Fechar">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-excerpt" id="modalExcerpt"></p>
+        </div>
+        <div class="modal-footer">
+          <div class="chunk-nav" id="chunkNav"></div>
+          <button
+            class="modal-nav-btn"
+            id="prevChunk"
+            onclick="navigateChunk(-1)"
+          >
+            ← Anterior
+          </button>
+          <button
+            class="modal-nav-btn"
+            id="nextChunk"
+            onclick="navigateChunk(1)"
+          >
+            Próximo →
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script>
       /* ── Starfield generator ── */
       (function () {
@@ -825,6 +1056,9 @@
         insufficient: "badge-insuf",
       };
 
+      let _chunks = [];
+      let _currentChunkIdx = 0;
+
       async function askQuestion() {
         const question = document.getElementById("question").value.trim();
         if (!question) return;
@@ -842,6 +1076,7 @@
         loaderText.classList.add("active");
         result.style.display = "none";
         footer.innerHTML = "";
+        _chunks = [];
 
         try {
           const res = await fetch("/ask", {
@@ -850,6 +1085,8 @@
             body: JSON.stringify({ question }),
           });
           const data = await res.json();
+
+          _chunks = data.chunks || [];
 
           answerText.textContent = data.answer;
           resultBody.className =
@@ -861,8 +1098,21 @@
           const icons = { high: "●", medium: "◑", low: "○", insufficient: "–" };
           const icon = icons[data.confidence] || "–";
 
-          const sourceBadges = data.sources
-            .map((s) => `<span class="badge badge-source">📁 ${s}</span>`)
+          // Build source badges grouped by file, clickable
+          const fileToChunks = {};
+          _chunks.forEach((c, i) => {
+            if (!fileToChunks[c.file]) fileToChunks[c.file] = [];
+            fileToChunks[c.file].push(i);
+          });
+
+          const sourceBadges = Object.entries(fileToChunks)
+            .map(([file, idxs]) => {
+              const firstIdx = idxs[0];
+              return `<span class="badge badge-source" role="button" tabindex="0"
+                title="Ver trecho de '${file}'"
+                onclick="openModal(${firstIdx})"
+                onkeydown="if(event.key==='Enter')openModal(${firstIdx})">📁 ${file}</span>`;
+            })
             .join("");
 
           const costBadge = !data.refused
@@ -889,6 +1139,70 @@
           loaderBar.classList.remove("active");
           loaderText.classList.remove("active");
         }
+      }
+
+      /* ── Modal ── */
+      function openModal(idx) {
+        if (!_chunks.length) return;
+        _currentChunkIdx = Math.max(0, Math.min(idx, _chunks.length - 1));
+        renderModal();
+        document.getElementById("sourceModal").classList.add("open");
+        document.addEventListener("keydown", onModalKey);
+      }
+
+      function closeModal() {
+        document.getElementById("sourceModal").classList.remove("open");
+        document.removeEventListener("keydown", onModalKey);
+      }
+
+      function closeModalOnOverlay(e) {
+        if (e.target === document.getElementById("sourceModal")) closeModal();
+      }
+
+      function onModalKey(e) {
+        if (e.key === "Escape") closeModal();
+        if (e.key === "ArrowLeft") navigateChunk(-1);
+        if (e.key === "ArrowRight") navigateChunk(1);
+      }
+
+      function navigateChunk(dir) {
+        const next = _currentChunkIdx + dir;
+        if (next < 0 || next >= _chunks.length) return;
+        _currentChunkIdx = next;
+        renderModal();
+      }
+
+      function renderModal() {
+        const chunk = _chunks[_currentChunkIdx];
+        const confClass = CONFIDENCE_CLASSES[chunk.confidence] || "badge-insuf";
+        const scoreLabel = (chunk.score * 100).toFixed(1);
+
+        document.getElementById("modalFilename").textContent = chunk.file;
+        document.getElementById("modalExcerpt").textContent = chunk.excerpt;
+
+        document.getElementById("modalMeta").innerHTML = `
+          <span class="badge ${confClass}" style="font-size:0.65rem;padding:0.2rem 0.55rem;">
+            ${chunk.confidence.toUpperCase()} ${scoreLabel}%
+          </span>
+          <span class="badge badge-cost" style="font-size:0.65rem;padding:0.2rem 0.55rem;">
+            Trecho ${_currentChunkIdx + 1}/${_chunks.length}
+          </span>`;
+
+        // Navigation dots
+        const nav = document.getElementById("chunkNav");
+        nav.innerHTML = _chunks
+          .map(
+            (
+              _,
+              i,
+            ) => `<button class="chunk-dot${i === _currentChunkIdx ? " active" : ""}"
+            title="Trecho ${i + 1}" onclick="openModal(${i})"></button>`,
+          )
+          .join("");
+
+        document.getElementById("prevChunk").disabled = _currentChunkIdx === 0;
+        document.getElementById("nextChunk").disabled =
+          _currentChunkIdx === _chunks.length - 1;
       }
     </script>
   </body>

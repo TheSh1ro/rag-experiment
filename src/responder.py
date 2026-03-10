@@ -9,6 +9,7 @@ def _refuse(answer: str, chunks: list[dict], average_score: float) -> dict:
     return {
         "answer":        answer,
         "sources":       sorted({c["file"] for c in chunks}),
+        "chunks":        [{"file": c["file"], "excerpt": c["excerpt"], "score": c["score"], "confidence": c["confidence"]} for c in chunks],
         "confidence":    "insufficient",
         "average_score": average_score,
         "cost":          _ZERO_COST,
@@ -44,6 +45,7 @@ def respond(question: str, top_k: int = 3) -> dict:
     return {
         "answer":        text,
         "sources":       sorted({c["file"] for c in chunks}),
+        "chunks":        [{"file": c["file"], "excerpt": c["excerpt"], "score": c["score"], "confidence": c["confidence"]} for c in chunks],
         "confidence":    chunks[0]["confidence"],
         "average_score": average_score,
         "cost":          cost,
