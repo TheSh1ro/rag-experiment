@@ -4,6 +4,9 @@ from llm import complete, calculate_cost
 
 _ZERO_COST = calculate_cost(0, 0)
 
+# Phrase the LLM uses when it can't find the answer in the excerpts
+_LLM_REFUSAL_MARKER = "I could not find this information"
+
 
 def _refuse(answer: str, chunks: list[dict], average_score: float) -> dict:
     return {
@@ -41,6 +44,19 @@ def respond(question: str, top_k: int = 3) -> dict:
         )
 
     text, cost = complete(question, chunks)
+
+    llm_refused = _LLM_REFUSAL_MARKER.lower() in text.lower()
+    if llm_refused:
+        print("[RESPONDER] LLM returned refusal phrase — downgrading confidence.")
+        return {
+            "answer":        text,
+            "sources":       sorted({c["file"] for c in chunks}),
+            "chunks":        [{"file": c["file"], "excerpt": c["excerpt"], "score": c["score"], "confidence": c["confidence"]} for c in chunks],
+            "confidence":    "insufficient",
+            "average_score": average_score,
+            "cost":          cost,
+            "refused":       True,
+        }
 
     return {
         "answer":        text,
