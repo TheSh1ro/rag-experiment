@@ -61,7 +61,7 @@ chromadb/
 banco/
 
 # Documentos internos — não versionar
-documentos/
+documents/
 
 # Temporary files
 tmp/
